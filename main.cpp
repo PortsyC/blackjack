@@ -156,7 +156,7 @@ float play_blackjack(int number_of_decks) {
 }
 
 int main() {
-  const int number_of_games = 1;   
+  const int number_of_games = 10;   
   const int number_of_decks = 4;
 
   float total = 0.0;
