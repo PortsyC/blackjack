@@ -3,7 +3,7 @@
 #include <vector> 
 #include <random>
 #include <chrono> 
-
+using namespace std;
 /*
  *  The main function below runs a game of blackjack which
  *  calls a "play" function.  Make a copy of this code and 
@@ -46,7 +46,15 @@ int value(std::vector <char> hand) {
   }
   return value; 
 }
+bool play(vector <char> hand, char dealer, vector <char> other_cards){ 
+ 
+ int v=value(hand);
 
+ if(v<16){
+   return true;
+ }
+  return false; 
+}
 float play_blackjack(int number_of_decks) {
   // Returns the result: player wins -> 1
   //                     player loss -> -1
@@ -121,14 +129,19 @@ float play_blackjack(int number_of_decks) {
       dealer_hand.push_back( deck[0] );
       deck.erase(deck.begin()); 
     }
-    if ( value(player_hand) == value(dealer_hand) ) {
-      result = 0.0; 
-    }
-    if ( value(player_hand) > value(dealer_hand) ) {
+    if ( value(dealer_hand) > 21 ) {
       result = 1.0; 
     }
-    if ( value(player_hand) < value(dealer_hand) ) {
-      result = -1.0; 
+    else {
+      if ( value(player_hand) == value(dealer_hand) ) {
+        result = 0.0; 
+      }
+      if ( value(player_hand) > value(dealer_hand) ) {
+        result = 1.0; 
+      }
+      if ( value(player_hand) < value(dealer_hand) ) {
+        result = -1.0; 
+      }
     }
   }
   
@@ -145,9 +158,13 @@ float play_blackjack(int number_of_decks) {
 int main() {
   const int number_of_games = 1;   
   const int number_of_decks = 4;
+
+  float total = 0.0;
   
   for (int game=0; game<number_of_games; game++) {
-    std::cout << play_blackjack(number_of_decks) << '\n'; 
+    float result = play_blackjack(number_of_decks); 
+    total += result; 
+    std::cout << total << '\n'; 
   }
 
   return 0; 
